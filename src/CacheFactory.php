@@ -21,9 +21,9 @@ class CacheFactory
     ];
 
     /**
-     * Voila!
+     * Factory Method
      * 
-     * Factory pattern, create concrete Object by Driver.
+     * This method responsible to generate cache object.
      * 
      * @return void
      */
@@ -33,8 +33,8 @@ class CacheFactory
             die('Driver ' . $driver .' is not supported.');
         }
 
-        // We are not using maging automatic instantiate like this new $driver.
-        // There is a class colission, use case instead.
+        // We are not using automatic instantiate like `new $driver`
+        // Because of class colission, use case instead.
         switch ($driver) {
             case 'Redis':
                 return new Redis($host, $port, $timeout);
