@@ -6,6 +6,7 @@ ini_set('display_errors', 1);
 /** API Sample ..  */
 
 require __DIR__ . '/../src/CacheFactory.php';
+require __DIR__ . '/../src/Interface/CacheInterface.php';
 require __DIR__ . '/../src/Drivers/Memcached.php';
 require __DIR__ . '/../src/Drivers/Redis.php';
 
