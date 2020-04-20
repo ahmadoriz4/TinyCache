@@ -13,7 +13,7 @@
 
 namespace Gemblue\TinyCache;
 
-class Redis
+class Redis implements CacheInterface
 {    
     /** Redis Ext container */
     protected $redis;

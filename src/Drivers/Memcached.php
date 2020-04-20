@@ -9,7 +9,7 @@
 
 namespace Gemblue\TinyCache;
 
-class Memcached
+class Memcached implements CacheInterface
 {    
     /** Ext container */
     protected $memcached;
@@ -91,7 +91,7 @@ class Memcached
      * 
      * @return bool
      */
-    public function deleteMultiple(iterable $keys) 
+    public function deleteMultiple(array $keys) 
     {
        
     }
