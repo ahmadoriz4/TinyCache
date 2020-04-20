@@ -10,7 +10,7 @@
  * @author Gemblue
  */
 
-namespace Gemblue\TinyCache\Drivers;
+namespace Gemblue\TinyCache;
 
 interface CacheInterface
 {
