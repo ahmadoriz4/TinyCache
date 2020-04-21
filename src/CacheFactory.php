@@ -24,10 +24,10 @@ class CacheFactory
      * Factory Method
      * 
      * This method responsible to generate cache object.
-     * 
+     *  
      * @return void
      */
-    public function getInstance(string $driver, string $host, int $port, int $timeout) 
+    public function getInstance(string $driver, string $host, int $port, int $arg) 
     {
         if (!in_array($driver, $this->whitelists)) {
             die('Driver ' . $driver .' is not supported.');
@@ -37,10 +37,10 @@ class CacheFactory
         // Because of class colission, use case instead.
         switch ($driver) {
             case 'Redis':
-                return new Redis($host, $port, $timeout);
+                return new Redis($host, $port, $arg);
                 break;
             case 'Memcached':
-                return new Memcached($host, $port, $timeout);
+                return new Memcached($host, $port, $arg);
                 break;
             default:
                 die('Driver ' . $driver .' is not supported.');
