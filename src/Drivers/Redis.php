@@ -15,13 +15,13 @@ namespace Gemblue\TinyCache;
 
 class Redis implements CacheInterface
 {    
-    /** Redis Ext container */
+    /** Ext container */
     protected $redis;
     
     /**
      * Constructor 
      * 
-     * Handle connection and Inject Redis Ext.
+     * Handle connection and inject ext.
      * 
      * @return void
      */
@@ -145,6 +145,9 @@ class Redis implements CacheInterface
      */
     public function has(string $key) 
     {
-        return $this->redis->get($key) ?? false;
+        if ($this->redis->get($key))
+            return true;
+
+        return false;
     }
 }
