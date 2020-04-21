@@ -1,6 +1,6 @@
 {
 	"name": "gemblue/tiny-cache",
-	"description": "Simple Cache Adapter for PHP Projects, Psr-16 Comply",
+	"description": "Simple Cache Adapter for PHP Projects, PSR-16 Comply",
 	"type": "library",
 	"license": "MIT",
 	"authors": [
