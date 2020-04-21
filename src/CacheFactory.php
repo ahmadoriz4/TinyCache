@@ -30,7 +30,11 @@ class CacheFactory
     public function getInstance(string $driver, string $host, int $port, int $arg) 
     {
         if (!in_array($driver, $this->whitelists)) {
-            die('Driver ' . $driver .' is not supported.');
+            die($driver .' extension is not supported.');
+        }
+        
+        if (!extension_loaded(strtolower($driver))) {
+            die($driver . ' extension is not installed');
         }
 
         // We are not using automatic instantiate like `new $driver`
