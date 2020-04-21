@@ -11,7 +11,9 @@
  * @author Gemblue
  */
 
-namespace Gemblue\TinyCache;
+namespace Gemblue\TinyCache\Drivers;
+
+use Gemblue\TinyCache\Interfaces\CacheInterface;
 
 class Memcached implements CacheInterface
 {
