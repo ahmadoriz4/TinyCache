@@ -19,7 +19,7 @@ class CacheFactory
         'Redis' => \Gemblue\TinyCache\Drivers\Redis::class,
         'Memcached' => \Gemblue\TinyCache\Drivers\Memcached::class,
     ];
-
+    
     /**
      * Factory Method
      * 
