@@ -19,7 +19,7 @@ class CacheFactory
         'Redis', 
         'Memcached'
     ];
-
+    
     /**
      * Factory Method
      * 
