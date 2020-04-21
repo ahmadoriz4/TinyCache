@@ -52,4 +52,3 @@ For full example, browse example folder.
 | deleteMultiple | Delete multiple key |
 | has | Check key existance |
 | getMultiple | Get multiple key |
---- | --- |
