@@ -8,7 +8,7 @@ Modern tiny PHP cache adapter for PHP Projects.
 - Factory and Adapter Pattern
 - Exception
 
-# Supported Framework
+## Supported Framework
 
 This library is PSR-4 comply. You can use it on every framework that support composer.
 
@@ -18,18 +18,18 @@ This library is PSR-4 comply. You can use it on every framework that support com
 - Your framework?
 - Native PHP
 
-# Supported Drivers
+## Supported Drivers
 
 - Redis
 - Memcached
 
 Next plan : MongoDB, ApacheIgnite
 
-# Installation
+## Installation
 
 `composer require gemblue/tiny-cache`
 
-# Usage
+## Usage
 
 ```php
 use Gemblue\TinyCache\CacheFactory;
@@ -40,10 +40,10 @@ $cache = $cacheFactory->getInstance('Memcached', 'localhost', '11211', true);
 
 For full example, browse example folder.
 
-# API
+## API
 
 | Method | Desc |
------------------
+--- | --- |
 | set | Set a key |
 | get | Get a key |
 | setMultiple | Set multiple key |
@@ -52,3 +52,4 @@ For full example, browse example folder.
 | deleteMultiple | Delete multiple key |
 | has | Check key existance |
 | getMultiple | Get multiple key |
+--- | --- |
