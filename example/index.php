@@ -26,5 +26,5 @@ $cache->setMultiple([
 // $cache->clear();
 // $cache->deleteMultiple(['NAME', 'ADDRESS']);
 // echo $cache->has('NAME');
-// print_r($cache->getMultiple(['NAME', 'ADDRESS']));
+print_r($cache->getMultiple(['NAME', 'ADDRESS']));
 // echo $cache->get('NAME');
