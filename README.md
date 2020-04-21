@@ -46,9 +46,11 @@ For full example, browse example folder.
 --- | --- |
 | set | Set a key |
 | get | Get a key |
-| setMultiple | Set multiple key |
 | delete | Delete a key |
 | clear | Wipe all key |
-| deleteMultiple | Delete multiple key |
 | has | Check key existance |
+| setMultiple | Set multiple key |
 | getMultiple | Get multiple key |
+| deleteMultiple | Delete multiple key |
+
+
