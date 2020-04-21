@@ -1,6 +1,6 @@
 # TinyCache
 
-Modern tiny PHP cache adapter for PHP Projects. 
+Modern cache adapter for PHP Projects. 
 
 - PHP ^7.0 Syntax
 - PSR-4
