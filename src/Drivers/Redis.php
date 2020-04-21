@@ -11,7 +11,7 @@
  * @author Gemblue
  */
 
-namespace Gemblue\TinyCache;
+namespace Gemblue\TinyCache\Drivers;
 
 class Redis implements CacheInterface
 {    

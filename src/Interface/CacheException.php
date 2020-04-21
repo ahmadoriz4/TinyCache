@@ -4,7 +4,7 @@
  * Interface used for all types of exceptions thrown by the implementing library.
  */
 
-namespace Gemblue\TinyCache;
+namespace Gemblue\TinyCache\Interfaces;
 
 interface CacheException
 {
