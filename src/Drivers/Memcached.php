@@ -11,7 +11,9 @@
  * @author Gemblue
  */
 
-namespace Gemblue\TinyCache;
+namespace Gemblue\TinyCache\Drivers;
+
+use Gemblue\TinyCache\Interfaces\CacheInterface;
 
 class Memcached implements CacheInterface
 {
@@ -25,12 +27,13 @@ class Memcached implements CacheInterface
      * 
      * @return void
      */
-    public function __construct(string $host, int $port, bool $persistence)
-    {       
+    public function __construct(array $options)
+    {
         // Inject dependency.
         $this->memcached = new \Memcached;
         
-        if (!$this->memcached->addServer($host, $port, $persistence)) {
+        if (!$this->memcached->addServer($options['host'], $options['port'], $options['persistence']))
+        {
             return new Exception('Failed to connect, maybe Memcached server is not running, or wrong config for host and port.');
         }
     }
@@ -47,7 +50,7 @@ class Memcached implements CacheInterface
         if ($get == false)
             return $default;
 
-        return $get;
+        return unserialize($get);
     }
 
     /**
@@ -55,9 +58,9 @@ class Memcached implements CacheInterface
      * 
      * @return bool
      */
-    public function set(string $key, string $value, int $ttl = null) 
+    public function set(string $key, $value, int $ttl = null) 
     {
-        return $this->memcached->set($key, $value, $ttl);
+        return $this->memcached->set($key, serialize($value), $ttl);
     }
     
     /**
@@ -67,6 +70,19 @@ class Memcached implements CacheInterface
      */
     public function delete(string $key) 
     {
+        if(strpos($key, '*'))
+        {
+            $keys = $this->memcached->getAllKeys();
+            $prefix = str_replace('*', '', $key);
+            foreach ($keys as $index => $name) {
+                if (strpos($name,$prefix) !== 0) {
+                    unset($keys[$index]);
+                } else {
+                    $this->memcached->delete($name);
+                }
+            }
+        }
+
         return $this->memcached->delete($key) ?? false;
     }
 

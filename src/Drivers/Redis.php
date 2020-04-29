@@ -11,7 +11,9 @@
  * @author Gemblue
  */
 
-namespace Gemblue\TinyCache;
+namespace Gemblue\TinyCache\Drivers;
+
+use Gemblue\TinyCache\Interfaces\CacheInterface;
 
 class Redis implements CacheInterface
 {    
@@ -25,12 +27,12 @@ class Redis implements CacheInterface
      * 
      * @return void
      */
-    public function __construct(string $host, int $port, int $timeout)
+    public function __construct(array $options)
     {       
         // Inject dependency.
         $this->redis = new \Redis;
         
-        if (!$this->redis->connect($host, $port, $timeout)) {
+        if (!$this->redis->connect($options['host'], $options['port'])) {
             return new Exception('Failed to connect, maybe Redis server is not running, or wrong config for host and port.');
         }
     }
@@ -51,7 +53,7 @@ class Redis implements CacheInterface
         if ($get == false)
             return $default;
 
-        return $get;
+        return unserialize($get);
     }
 
     /**
@@ -59,11 +61,11 @@ class Redis implements CacheInterface
      * 
      * @return bool
      */
-    public function set(string $key, string $value, int $ttl = null) 
+    public function set(string $key, $value, int $ttl = null) 
     {
         $this->redis->setOption($this->redis::OPT_SERIALIZER, $this->redis::SERIALIZER_PHP);
         
-        $set = $this->redis->set($key, $value, $ttl);
+        $set = $this->redis->set($key, serialize($value), $ttl);
         
         $this->redis->setOption($this->redis::OPT_SERIALIZER, $this->redis::SERIALIZER_NONE);
         
@@ -77,7 +79,13 @@ class Redis implements CacheInterface
      */
     public function delete(string $key) 
     {
-        return $this->redis->delete($key) ?? false;
+        if(strpos($key, '*'))
+        {
+            $keys = $this->redis->keys($key);
+            $this->redis->del($keys);
+        }
+
+        return $this->redis->del($key) ?? false;
     }
 
     /**
@@ -129,7 +137,7 @@ class Redis implements CacheInterface
     public function deleteMultiple(iterable $keys) 
     {
         foreach ($keys as $key) {
-            if (!$this->redis->delete($key))
+            if (!$this->redis->del($key))
                 return false;
         }
 
