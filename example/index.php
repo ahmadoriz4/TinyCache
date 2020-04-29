@@ -13,7 +13,12 @@ require __DIR__ . '/../src/Drivers/Redis.php';
 use Gemblue\TinyCache\CacheFactory;
 
 $cacheFactory = new CacheFactory;
-$cache = $cacheFactory->getInstance('Memcached', 'localhost', '11211', true);
+$cache = $cacheFactory->getInstance([
+    'driver' => 'Memcached',
+    'host' => 'localhost',
+    'port' => '11211',
+    'persistence' => true
+]);
 
 // $cache->set('NAME', 'BUDI', 3600);
 
