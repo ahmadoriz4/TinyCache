@@ -37,7 +37,12 @@ Next plan : MongoDB, ApacheIgnite
 use Gemblue\TinyCache\CacheFactory;
 
 $cacheFactory = new CacheFactory;
-$cache = $cacheFactory->getInstance('Memcached', 'localhost', '11211', true);
+$cache = $cacheFactory->getInstance([
+  'driver' => 'Memcached',
+  'host' => 'localhost',
+  'post' => 11211,
+  'persistencet => true
+]);
 ```
 
 For full example, browse example folder.
