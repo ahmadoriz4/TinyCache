@@ -1,6 +1,7 @@
+
 # TinyCache
 
-Modern tiny PHP cache adapter for PHP Projects. 
+Modern cache adapter for PHP Projects. 
 
 - PHP ^7.0 Syntax
 - PSR-4
@@ -22,6 +23,7 @@ This library is PSR-4 comply. You can use it on every framework that support com
 
 - Redis
 - Memcached
+- File
 
 Next plan : MongoDB, ApacheIgnite
 
@@ -46,9 +48,18 @@ For full example, browse example folder.
 --- | --- |
 | set | Set a key |
 | get | Get a key |
-| setMultiple | Set multiple key |
 | delete | Delete a key |
 | clear | Wipe all key |
-| deleteMultiple | Delete multiple key |
 | has | Check key existance |
+| setMultiple | Set multiple key |
 | getMultiple | Get multiple key |
+| deleteMultiple | Delete multiple key |
+
+
+## Delete by Prefix
+
+To delete caches with any prefix, just call like this:
+
+```php
+$cache->delete('prefix_*');
+```
