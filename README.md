@@ -55,7 +55,6 @@ For full example, browse example folder.
 | getMultiple | Get multiple key |
 | deleteMultiple | Delete multiple key |
 
-
 ## Delete by Prefix
 
 To delete caches with any prefix, just call like this:
@@ -63,3 +62,8 @@ To delete caches with any prefix, just call like this:
 ```php
 $cache->delete('prefix_*');
 ```
+
+## Developed By
+
+- @gemblue
+- @yllumi
