@@ -41,7 +41,7 @@ $cache = $cacheFactory->getInstance([
   'driver' => 'Memcached',
   'host' => 'localhost',
   'post' => 11211,
-  'persistencet => true
+  'persistence' => true
 ]);
 ```
 
