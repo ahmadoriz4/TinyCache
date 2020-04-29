@@ -16,10 +16,11 @@ class CacheFactory
 { 
     /** Driver whitelist .. */
     public $whitelists = [
-        'Redis', 
-        'Memcached'
+        'Redis' => \Gemblue\TinyCache\Drivers\Redis::class,
+        'Memcached' => \Gemblue\TinyCache\Drivers\Memcached::class,
+        'File' => \Gemblue\TinyCache\Drivers\File::class,
     ];
-
+    
     /**
      * Factory Method
      * 
@@ -27,27 +28,12 @@ class CacheFactory
      *  
      * @return void
      */
-    public function getInstance(string $driver, string $host, int $port, int $arg) 
+    public function getInstance(string $driver, array $options) 
     {
-        if (!in_array($driver, $this->whitelists)) {
+        if (!in_array($driver, array_keys($this->whitelists))) {
             die($driver .' extension is not supported.');
         }
-        
-        if (!extension_loaded(strtolower($driver))) {
-            die($driver . ' extension is not installed');
-        }
 
-        // We are not using automatic instantiate like `new $driver`
-        // Because of class colission, use case instead.
-        switch ($driver) {
-            case 'Redis':
-                return new Redis($host, $port, $arg);
-                break;
-            case 'Memcached':
-                return new Memcached($host, $port, $arg);
-                break;
-            default:
-                die('Driver ' . $driver .' is not supported.');
-        }
+        return new $this->whitelists[$driver]($options);
     }
 }
