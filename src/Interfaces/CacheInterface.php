@@ -10,7 +10,7 @@
  * @author Gemblue
  */
 
-namespace Gemblue\TinyCache;
+namespace Gemblue\TinyCache\Interfaces;
 
 interface CacheInterface
 {
@@ -41,7 +41,7 @@ interface CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.
      */
-    public function set(string $key, string $value, int $ttl = null);
+    public function set(string $key, $value, int $ttl = null);
 
     /**
      * Delete an item from the cache by its unique key.

@@ -7,7 +7,7 @@
  * this interface.
  */
 
-namespace Gemblue\TinyCache;
+namespace Gemblue\TinyCache\Interfaces;
 
 interface InvalidArgumentException extends CacheException
 {
