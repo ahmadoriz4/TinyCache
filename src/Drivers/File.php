@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Simple Driver for Memcached.
+ * Simple Driver for File.
  *
- * This class just wrap the Memcached PHP Ext and follow PSR 16 Interface.
- * We don't extend Memcached in this class. Just inject the class in construct.
- * Maybe in the future we change `php-memcached` to other Ext.
+ * This class just wrap the File PHP Ext and follow PSR 16 Interface.
+ * We don't extend File in this class. Just inject the class in construct.
+ * Maybe in the future we change `php-File` to other Ext.
  * 
  * @package Drivers
- * @author Gemblue
+ * @author Yllumi
  */
 
 namespace Gemblue\TinyCache\Drivers;
