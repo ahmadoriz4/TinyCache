@@ -33,7 +33,7 @@ class Redis implements CacheInterface
         $this->redis = new \Redis;
         
         if (!$this->redis->connect($options['host'], $options['port'])) {
-            return new Exception('Failed to connect, maybe Redis server is not running, or wrong config for host and port.');
+            return new \Exception('Failed to connect, maybe Redis server is not running, or wrong config for host and port.');
         }
     }
     
