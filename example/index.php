@@ -5,16 +5,16 @@ ini_set('display_errors', 1);
 
 /** API Sample ..  */
 
+require __DIR__ . '/../src/Interfaces/CacheInterface.php';
+require __DIR__ . '/../src/Interfaces/CacheException.php';
 require __DIR__ . '/../src/CacheFactory.php';
-require __DIR__ . '/../src/Interface/CacheInterface.php';
 require __DIR__ . '/../src/Drivers/Memcached.php';
 require __DIR__ . '/../src/Drivers/Redis.php';
 
 use Gemblue\TinyCache\CacheFactory;
 
 $cacheFactory = new CacheFactory;
-$cache = $cacheFactory->getInstance([
-    'driver' => 'Memcached',
+$cache = $cacheFactory->getInstance('Redis', [
     'host' => 'localhost',
     'port' => '11211',
     'persistence' => true
