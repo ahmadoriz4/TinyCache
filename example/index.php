@@ -13,23 +13,29 @@ require __DIR__ . '/../src/Drivers/Redis.php';
 
 use Gemblue\TinyCache\CacheFactory;
 
-$cacheFactory = new CacheFactory;
-$cache = $cacheFactory->getInstance('Redis', [
-    'host' => 'localhost',
-    'port' => '11211',
-    'persistence' => true
-]);
+try {
 
-// $cache->set('NAME', 'BUDI', 3600);
+    $cacheFactory = new CacheFactory;
+    $cache = $cacheFactory->getInstance('Memcached', [
+        'host' => 'localhost',
+        'port' => '11211',
+        'persistence' => true
+    ]);
+    
+} catch (Throwable $t) {
+    echo $t->getMessage();
+}
 
 $cache->setMultiple([
-    'NAME' => 'BUDI',
-    'ADDRESS' => 'BANDUNG'
+    'FOO' => 'BAR',
+    'BAR' => 'FOO'
 ], 3600);
 
-// $cache->delete('NAME');
+print_r($cache->getMultiple(['FOO', 'BAR']));
+
+// $cache->set('FOO', 'BAR', 3600);
+// $cache->delete('FOO');
 // $cache->clear();
-// $cache->deleteMultiple(['NAME', 'ADDRESS']);
-// echo $cache->has('NAME');
-print_r($cache->getMultiple(['NAME', 'ADDRESS']));
-// echo $cache->get('NAME');
+// $cache->deleteMultiple(['FOO', 'BAR']);
+// echo $cache->has('FOO');
+// echo $cache->get('FOO');
