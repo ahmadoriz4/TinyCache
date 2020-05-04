@@ -34,7 +34,7 @@ class Memcached implements CacheInterface
         
         if (!$this->memcached->addServer($options['host'], $options['port'], $options['persistence']))
         {
-            return new Exception('Failed to connect, maybe Memcached server is not running, or wrong config for host and port.');
+            return new \Exception('Failed to connect, maybe Memcached server is not running, or wrong config for host and port.');
         }
     }
     
