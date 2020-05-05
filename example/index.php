@@ -10,15 +10,16 @@ require __DIR__ . '/../src/Interfaces/CacheException.php';
 require __DIR__ . '/../src/CacheFactory.php';
 require __DIR__ . '/../src/Drivers/Memcached.php';
 require __DIR__ . '/../src/Drivers/Redis.php';
+require __DIR__ . '/../src/Drivers/MongoDB.php';
 
 use Gemblue\TinyCache\CacheFactory;
 
 try {
 
     $cacheFactory = new CacheFactory;
-    $cache = $cacheFactory->getInstance('Memcached', [
+    $cache = $cacheFactory->getInstance('MongoDB', [
         'host' => 'localhost',
-        'port' => '11211',
+        'port' => '27017',
         'persistence' => true
     ]);
     
@@ -26,16 +27,17 @@ try {
     echo $t->getMessage();
 }
 
-$cache->setMultiple([
-    'FOO' => 'BAR',
-    'BAR' => 'FOO'
-], 3600);
+$cache->set('FOO', 'BAR', 3600);
+//echo $cache->get('FOO');
 
-print_r($cache->getMultiple(['FOO', 'BAR']));
+// $cache->setMultiple([
+//     'FOO' => 'BAR',
+//     'BAR' => 'FOO'
+// ], 3600);
 
-// $cache->set('FOO', 'BAR', 3600);
+// print_r($cache->getMultiple(['FOO', 'BAR']));
+
 // $cache->delete('FOO');
 // $cache->clear();
 // $cache->deleteMultiple(['FOO', 'BAR']);
 // echo $cache->has('FOO');
-// echo $cache->get('FOO');
