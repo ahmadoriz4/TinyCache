@@ -19,6 +19,7 @@ class CacheFactory
         'Redis' => \Gemblue\TinyCache\Drivers\Redis::class,
         'Memcached' => \Gemblue\TinyCache\Drivers\Memcached::class,
         'File' => \Gemblue\TinyCache\Drivers\File::class,
+        'MongoDB' => \Gemblue\TinyCache\Drivers\MongoDB::class,
     ];
     
     /**
