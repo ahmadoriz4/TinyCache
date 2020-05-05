@@ -16,13 +16,15 @@ use Gemblue\TinyCache\Interfaces\CacheInterface;
 use MongoDB\Driver\Manager;
 use MongoDB\Driver\Exception;
 use MongoDB\Driver\BulkWrite;
+use MongoDB\Driver\Query;
 use MongoDB\BSON\ObjectID;
 
 class MongoDB implements CacheInterface
 {    
     /** Ext container */
-    protected $mongodb;
+    protected $manager;
     protected $bulkWrite;
+    protected $collection;
     
     /**
      * Constructor 
@@ -35,11 +37,18 @@ class MongoDB implements CacheInterface
     {       
         // Inject dependency.
         try {
+            
             $this->mongodb = new Manager('mongodb://'. $options['host'] .': '. $options['port']);
             $this->bulkWrite = new BulkWrite;
+        
         } catch (Exception $e) {
+            
             return new \Exception('Failed to connect, maybe MongoDB server is not running, or wrong config for host and port.');
+        
         }
+        
+        // Define collection.
+        $this->collection = 'cache.items';
     }
     
     /**
@@ -49,16 +58,15 @@ class MongoDB implements CacheInterface
      */
     public function get(string $key, $default = null) 
     {
-        $this->mongodb->setOption($this->mongodb::OPT_SERIALIZER, $this->mongodb::SERIALIZER_PHP);
-        
-        $get = $this->mongodb->get($key);
-        
-        $this->mongodb->setOption($this->mongodb::OPT_SERIALIZER, $this->mongodb::SERIALIZER_NONE);
+        $query = new Query([ 'key' => $key ]);     
+        $get = $this->mongodb->executeQuery($this->collection, $query)->toArray();
         
         if ($get == false)
             return $default;
-
-        return unserialize($get);
+        
+        $get = current($get);
+        
+        return unserialize($get->value);
     }
 
     /**
@@ -68,19 +76,99 @@ class MongoDB implements CacheInterface
      */
     public function set(string $key, $value, int $ttl = null) 
     {
-        $this->bulkWrite->insert(['_id' => new ObjectID, $key => serialize($value)]);
-        $write = $this->mongodb->executeBulkWrite('cache.items', $bulk);
+        // Insert new one.
+        $this->bulkWrite->insert(['_id' => new ObjectID, 'key' => $key, 'value' => serialize($value)]);
+        $set = $this->mongodb->executeBulkWrite($this->collection, $this->bulkWrite);
         
-        print_r($write);
-        exit;
-
         return $set;
     }
     
-    public function delete(string $key) {}
-    public function clear() {}
-    public function getMultiple(array $keys, $default = null) {}
-    public function setMultiple(array $values, int $ttl = null) {}
-    public function deleteMultiple(array $keys) {}
-    public function has(string $key) {}
+    /**
+     * Delete key
+     * 
+     * @return bool
+     */
+    public function delete(string $key) 
+    {
+        $this->bulkWrite->delete(['key' => $key]);
+        $delete = $this->mongodb->executeBulkWrite($this->collection, $this->bulkWrite);
+
+        return $delete ?? false;
+    }
+
+    /**
+     * To Wipe Cache.
+     * 
+     * @return bool
+     */
+    public function clear() 
+    {
+        // Not yet.
+    }
+
+    /**
+     * Get multiple Keys.
+     * 
+     * @return iterable
+     */
+    public function getMultiple(array $keys, $default = null) 
+    {
+        $temp = [];
+
+        foreach ($keys as $key) {
+            $temp[] = [$key => $this->get($key)];
+        }
+
+        return $temp ?? $default;
+    }
+    
+    /**
+     * Set multiple key value, also with ttl.
+     * 
+     * @return bool
+     */
+    public function setMultiple(iterable $values, int $ttl = null) 
+    {
+        foreach ($values as $key => $value) {
+            if (!$this->bulkWrite->insert(['_id' => new ObjectID, 'key' => $key, 'value' => serialize($value)]))
+                return false;
+        }
+
+        if ($this->mongodb->executeBulkWrite($this->collection, $this->bulkWrite))
+            return true;
+        
+        return false;
+    }
+
+    /**
+     * Delete multiple key.
+     * 
+     * @return bool
+     */
+    public function deleteMultiple(iterable $keys) 
+    {
+        foreach ($keys as $key) {
+            $this->bulkWrite->delete(['key' => $key]);
+        }
+        
+        if ($this->mongodb->executeBulkWrite($this->collection, $this->bulkWrite))
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Has
+     * 
+     * To check value is exist or no.
+     * 
+     * @return bool
+     */
+    public function has(string $key) 
+    {
+        if ($this->get($key))
+            return true;
+
+        return false;
+    }
 }
