@@ -17,7 +17,7 @@ use Gemblue\TinyCache\CacheFactory;
 try {
 
     $cacheFactory = new CacheFactory;
-    $cache = $cacheFactory->getInstance('MongoDB', [
+    $cache = $cacheFactory->getInstance('Memcached', [
         'host' => 'localhost',
         'port' => '27017',
         'persistence' => true
@@ -27,17 +27,18 @@ try {
     echo $t->getMessage();
 }
 
-$cache->set('FOO', 'BAR', 3600);
-//echo $cache->get('FOO');
-
-// $cache->setMultiple([
-//     'FOO' => 'BAR',
-//     'BAR' => 'FOO'
-// ], 3600);
-
-// print_r($cache->getMultiple(['FOO', 'BAR']));
-
+// $cache->set('FOO', 'BAR', 3600);
 // $cache->delete('FOO');
+// echo $cache->get('FOO');
+
+$cache->setMultiple([
+    'cache1' => 'value1',
+    'cache2' => 'value2',
+    'cache3' => 'value3'
+], 3600);
+
+// $cache->deleteMultiple(['cache1', 'cache2', 'cache3']);
+print_r($cache->getMultiple(['cache1', 'cache2', 'cache3']));
+
 // $cache->clear();
-// $cache->deleteMultiple(['FOO', 'BAR']);
-// echo $cache->has('FOO');
+// echo $cache->has('cache1');
