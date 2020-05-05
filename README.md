@@ -24,8 +24,9 @@ This library is PSR-4 comply. You can use it on every framework that support com
 - Redis
 - Memcached
 - File
+- MongoDB
 
-Next plan : MongoDB, ApacheIgnite
+Next plan : ApacheIgnite
 
 ## Installation
 
