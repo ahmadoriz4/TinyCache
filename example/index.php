@@ -17,7 +17,7 @@ use Gemblue\TinyCache\CacheFactory;
 try {
 
     $cacheFactory = new CacheFactory;
-    $cache = $cacheFactory->getInstance('Memcached', [
+    $cache = $cacheFactory->getInstance('MongoDB', [
         'host' => 'localhost',
         'port' => '27017',
         'persistence' => true
