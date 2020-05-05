@@ -3,8 +3,8 @@
 /**
  * Simple Driver for MongoDB.
  *
- * This class just wrap the Redis PECL driver.
- * Install : sudo pecl install mongodb 
+ * This class just wrap the MongoDB PECL driver.
+ * Install Dependency : sudo pecl install mongodb 
  * 
  * @package Drivers
  * @author Gemblue
