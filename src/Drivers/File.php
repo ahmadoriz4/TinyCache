@@ -78,7 +78,7 @@ class File implements CacheInterface
 
         if ($this->write_file($this->file_path.$key, serialize($contents)))
         {
-            chmod($this->file_path.$key, 0640);
+            chmod($this->file_path.$key, 0755);
             return TRUE;
         }
 
